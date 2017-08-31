@@ -19,9 +19,12 @@ import type {
   StyleModuleMapType
 } from './types';
 
+// eslint-disable-next-line flowtype/no-weak-types
+type FiletypePluginWithOptionsType = [string, Object];
+
 type FiletypeOptionsType = {|
   +syntax: string,
-  +plugins?: $ReadOnlyArray<string>
+  +plugins?: $ReadOnlyArray<string | FiletypePluginWithOptionsType>
 |};
 
 type FiletypesConfigurationType = {
@@ -52,8 +55,13 @@ const getExtraPlugins = (filetypeOptions: ?FiletypeOptionsType): $ReadOnlyArray<
   }
 
   return filetypeOptions.plugins.map((plugin) => {
-    // eslint-disable-next-line import/no-dynamic-require, global-require
-    return require(plugin);
+    if (typeof plugin === 'string') {
+      // eslint-disable-next-line import/no-dynamic-require, global-require
+      return require(plugin);
+    } else {
+      // eslint-disable-next-line import/no-dynamic-require, global-require
+      return require(plugin[0])(plugin[1]);
+    }
   });
 };
 

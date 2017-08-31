@@ -15,7 +15,10 @@
           "properties": {
             "plugins": {
               "items": {
-                "type": "string"
+                "type": [
+                  "string",
+                  "array"
+                ]
               },
               "type": "array"
             },
@@ -44,8 +47,15 @@
     "webpackHotModuleReloading": {
       "type": "boolean"
     },
+    "handleCss": {
+      "type": "boolean"
+    },
     "handleMissingStyleName": {
-      "enum": ["throw", "warn", "ignore"]
+      "enum": [
+        "throw",
+        "warn",
+        "ignore"
+      ]
     }
   },
   "type": "object"
