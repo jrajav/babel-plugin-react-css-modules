@@ -126,7 +126,15 @@ export default ({
 
     const extension = path.node.source.value.lastIndexOf('.') > -1 ? path.node.source.value.substr(path.node.source.value.lastIndexOf('.')) : null;
 
-    if (extension !== '.css' && Object.keys(stats.opts.filetypes).indexOf(extension) < 0) {
+    const handleCss = stats.opts.handleCss !== false;
+
+    const handledExtensions = Object.keys(stats.opts.filetypes);
+
+    if (handleCss) {
+      handledExtensions.push('.css');
+    }
+
+    if (handledExtensions.indexOf(extension) < 0) {
       return true;
     }
 
